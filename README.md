@@ -50,3 +50,7 @@ args:
     --reset: The action of finish game
 ```
 
+## Stop
+```shell
+按ctrl+c退出程序(control + c to exit program)   
+```

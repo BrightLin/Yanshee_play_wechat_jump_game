@@ -243,6 +243,7 @@ def main():
     if not op:
         print('bye')
         return
+    print("Exit program: press CTRL + C\n")
     print('Program version：{}'.format(VERSION))
     debug.dump_device_info()
     screenshot.check_screenshot()

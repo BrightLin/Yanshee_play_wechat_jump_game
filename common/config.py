@@ -29,16 +29,19 @@ def open_accordant_config():
             file_name = os.path.join(here, file)
             with open(file_name, 'r') as f:
                 print("Load config file from {}".format(file_name))
+                print("**********************")
                 return json.load(f)
 
     # 根据分辨率查找配置文件
     if os.path.exists(config_file):
         with open(config_file, 'r') as f:
             print("Loading configure from {} ".format(config_file))
+            print("**********************")
             return json.load(f)
     else:
         with open('{}/config/default.json'.format(sys.path[0]), 'r') as f:
             print("Load default config")
+            print("**********************")
             return json.load(f)
 
 
