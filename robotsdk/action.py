@@ -33,8 +33,5 @@ def runAction(name, actionName, repeat):
     if actionName == "":
         exit(0)
 
-    sdkInit()
-
     api.ubtStartRobotAction(actionName, repeat)
 
-    sdkFinish(name)

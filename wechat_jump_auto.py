@@ -33,6 +33,7 @@ except Exception as ex:
     print('请检查项目根目录中的 common 文件夹是否存在')
     exit(-1)
 
+action.sdkInit()
 
 startAction = ""
 downAction = ""
@@ -282,6 +283,7 @@ def main():
         time.sleep(random.uniform(0.9, 1.2))
 
     action_func(resetAction, 1)
+    action.sdkFinish(sys.argv[0])
 
 
 if __name__ == '__main__':
