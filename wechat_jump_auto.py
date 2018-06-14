@@ -240,7 +240,7 @@ def main():
     if not op:
         print('bye')
         return
-    print('程序版本号：{}'.format(VERSION))
+    print('Program version：{}'.format(VERSION))
     debug.dump_device_info()
     screenshot.check_screenshot()
 
