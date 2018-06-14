@@ -26,15 +26,12 @@ from six.moves import input
 
 try:
     from common import debug, config, screenshot
+    from robotsdk import action
 except Exception as ex:
     print(ex)
     print('请将脚本放在项目根目录中运行')
     print('请检查项目根目录中的 common 文件夹是否存在')
     exit(-1)
-
-import sys
-import time
-import socket
 
 VERSION = "1.1.1"
 
@@ -52,26 +49,16 @@ piece_base_height_1_2 = config['piece_base_height_1_2']
 # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
 piece_body_width = config['piece_body_width']
 
-
-def sendmsg(ip, buf):
-    PORT = 20005
-    ADDR = (ip, PORT)
-    udpclientSock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    udpclientSock.sendto(buf, ADDR)
-    udpclientSock.close()
+startAction = ""
+downAction = ""
+upAction = ""
+resetAction = ""
 
 
+# do robot's action
 def action_func(Name, Repeat):
-    print
-    'action name: ', Name, '.hts'
-    print
-    'repeat times: ', Repeat
-    send_string = "{\"cmd\":\"action\",\"type\":\"start\", \"para\":{\"name\":\""
-    send_string = send_string + Name
-    send_string = send_string + "\",\"repeat\":" + str(Repeat) + "}}"
-    print
-    send_string
-    sendmsg("127.0.0.1", send_string)
+    print("run action: ", Name)
+    action.runAction(sys.argv[0], Name + '.hts', Repeat)
 
 
 def set_button_position(im):
@@ -102,10 +89,9 @@ def jump(distance):
         duration=press_time
     )
     print(cmd)
-    # action_func('press', 1)
-    os.system('sleep 0.3 && python /home/pi/action_test.py press &')
+    action_func(downAction, 1)
     os.system(cmd)
-    action_func('songkai', 1)
+    action_func(upAction, 1)
     return press_time
 
 
@@ -247,7 +233,7 @@ def main():
     i, next_rest, next_rest_time = (0, random.randrange(3, 10),
                                     random.randrange(5, 10))
 
-    action_func('enter', 1)
+    action_func(startAction, 1)
 
     while True:
         screenshot.pull_screenshot()
@@ -277,8 +263,23 @@ def main():
         # 为了保证截图的时候应落稳了，多延迟一会儿，随机值防 ban
         time.sleep(random.uniform(0.9, 1.2))
 
-    action_func('reset', 1)
+    action_func(resetAction, 1)
 
 
 if __name__ == '__main__':
+    argLen = len(sys.argv)
+    if argLen > 0:
+        for index in range(1, argLen):
+            if sys.argv[index] == "--start" and index + 1 < argLen:
+                startAction = sys.argv[index + 1]
+            if sys.argv[index] == "--down" and index + 1 < argLen:
+                downAction = sys.argv[index + 1]
+            if sys.argv[index] == "--up" and index + 1 < argLen:
+                upAction = sys.argv[index + 1]
+            if sys.argv[index] == "--reset" and index + 1 < argLen:
+                resetAction = sys.argv[index + 1]
+
+    if startAction == "" and downAction == "" and upAction == "" and resetAction == "":
+        print("Error. Please specify robot action name. \nUsage: %s --start xxx --down xxx --up xxx --reset xxx" % sys.argv[0])
+
     main()

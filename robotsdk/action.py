@@ -8,6 +8,7 @@ isSetLed = False
 ll = cdll.LoadLibrary
 api = ll("/mnt/1xrobot/lib/librobot.so")
 
+
 def sdkInit():
     # ---------init blockly function------------
     api.ubtRobotInitialize()
@@ -26,23 +27,14 @@ def sdkFinish(name):
     api.ubtRobotDisconnect("123", "sdk", "127.0.0.1")
     api.ubtRobotDeinitialize()
 
-if __name__ == '__main__':
-    name = sys.argv[0]
-    argLen = len(sys.argv)
-    action = ""
 
-    for index in range(0, argLen):
-        if index > 0:
-            if (sys.argv[index] == '--action' or sys.argv[index] == '-a') and index + 1 < argLen:
-                action = sys.argv[index + 1]
+def runAction(name, actionName, repeat):
 
-    if action == "":
+    if actionName == "":
         exit(0)
 
     sdkInit()
 
-    api.ubtStartRobotAction(action, 1)
+    api.ubtStartRobotAction(actionName, repeat)
 
     sdkFinish(name)
-    print "exit blockly"
-    exit(0)
