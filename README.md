@@ -1,5 +1,7 @@
+Please run this program on Yanshee. 
+
 ## Branch
-Please checkout master branch.
+git checkout master
 
 ## Install adb
 sudo apt-get install -y adb
