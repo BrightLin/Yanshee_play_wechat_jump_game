@@ -238,8 +238,8 @@ def main():
     """
     主函数
     """
-    op = yes_or_no('请确保手机打开了 ADB 并连接了电脑，'
-                   '然后打开跳一跳并【开始游戏】后再用本程序，确定开始？')
+    op = yes_or_no('Please make sure that the phone has opened ADB and connected to Yanshee，'
+                   'Then open and "jump game" and start the game, then run this program? ')
     if not op:
         print('bye')
         return

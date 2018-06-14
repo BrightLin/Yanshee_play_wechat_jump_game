@@ -34,7 +34,7 @@ def open_accordant_config():
     # 根据分辨率查找配置文件
     if os.path.exists(config_file):
         with open(config_file, 'r') as f:
-            print("正在从 {} 加载配置文件".format(config_file))
+            print("Loading configure from {} ".format(config_file))
             return json.load(f)
     else:
         with open('{}/config/default.json'.format(sys.path[0]), 'r') as f:
