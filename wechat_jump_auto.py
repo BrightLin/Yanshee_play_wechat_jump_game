@@ -33,6 +33,28 @@ except Exception as ex:
     print('请检查项目根目录中的 common 文件夹是否存在')
     exit(-1)
 
+
+startAction = ""
+downAction = ""
+upAction = ""
+resetAction = ""
+
+argLen = len(sys.argv)
+if argLen > 0:
+  for index in range(1, argLen):
+    if sys.argv[index] == "--start" and index + 1 < argLen:
+        startAction = sys.argv[index + 1]
+    if sys.argv[index] == "--down" and index + 1 < argLen:
+        downAction = sys.argv[index + 1]
+    if sys.argv[index] == "--up" and index + 1 < argLen:
+        upAction = sys.argv[index + 1]
+    if sys.argv[index] == "--reset" and index + 1 < argLen:
+        resetAction = sys.argv[index + 1]
+
+if startAction == "" and downAction == "" and upAction == "" and resetAction == "":
+    print("Error. Please specify robot action name. \nUsage: python %s --start xxx --down xxx --up xxx --reset xxx" % sys.argv[0])
+    exit(1)
+
 VERSION = "1.1.1"
 
 # DEBUG 开关，需要调试的时候请改为 True，不需要调试的时候为 False
@@ -48,11 +70,6 @@ press_coefficient = config['press_coefficient']
 piece_base_height_1_2 = config['piece_base_height_1_2']
 # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
 piece_body_width = config['piece_body_width']
-
-startAction = ""
-downAction = ""
-upAction = ""
-resetAction = ""
 
 
 # do robot's action
@@ -267,19 +284,5 @@ def main():
 
 
 if __name__ == '__main__':
-    argLen = len(sys.argv)
-    if argLen > 0:
-        for index in range(1, argLen):
-            if sys.argv[index] == "--start" and index + 1 < argLen:
-                startAction = sys.argv[index + 1]
-            if sys.argv[index] == "--down" and index + 1 < argLen:
-                downAction = sys.argv[index + 1]
-            if sys.argv[index] == "--up" and index + 1 < argLen:
-                upAction = sys.argv[index + 1]
-            if sys.argv[index] == "--reset" and index + 1 < argLen:
-                resetAction = sys.argv[index + 1]
-
-    if startAction == "" and downAction == "" and upAction == "" and resetAction == "":
-        print("Error. Please specify robot action name. \nUsage: %s --start xxx --down xxx --up xxx --reset xxx" % sys.argv[0])
 
     main()
