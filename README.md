@@ -54,3 +54,15 @@ args:
 ```shell
 按ctrl+c退出程序(control + c to exit program)   
 ```
+
+## Accuracy
+如果需要修改精确度，不想每次都正中中心，可以修改代码
+wechat_jump_auto.py中，对press_time加一个数。
+```shell
+def jump(distance):
+    press_time = distance * press_coefficient + random.randint(1, 50)  # 1: min, 50: max
+```
+
+## Robot actions
+>用Yanshee-APP创建四个动作，分别是准备姿势、按压屏幕、松开、复位
+完成后，通过APP上的分享按钮，将动作推到Yanshee存储里。
