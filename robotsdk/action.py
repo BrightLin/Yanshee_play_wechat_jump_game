@@ -29,7 +29,7 @@ def sdkFinish(name):
 
 
 def runAction(name, actionName, repeat):
-
+    print("name: %s, actionName: %s, repeat: %d"%(name, actionName, repeat))
     if actionName == "":
         exit(0)
 

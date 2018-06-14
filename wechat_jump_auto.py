@@ -21,6 +21,7 @@ import sys
 import time
 import math
 import random
+import signal
 from PIL import Image
 from six.moves import input
 
@@ -31,30 +32,18 @@ except Exception as ex:
     print(ex)
     print('请将脚本放在项目根目录中运行')
     print('请检查项目根目录中的 common 文件夹是否存在')
-    exit(-1)
+    sys.exit(-1)
 
+def stopRun(signum, frame):
+    print("\nThank you! Bye~\n")
+    action.sdkFinish(sys.argv[0])
+    sys.exit(0)
+
+signal.signal(signal.SIGINT, stopRun)
+signal.signal(signal.SIGTERM, stopRun)
+
+# init action module
 action.sdkInit()
-
-startAction = ""
-downAction = ""
-upAction = ""
-resetAction = ""
-
-argLen = len(sys.argv)
-if argLen > 0:
-  for index in range(1, argLen):
-    if sys.argv[index] == "--start" and index + 1 < argLen:
-        startAction = sys.argv[index + 1]
-    if sys.argv[index] == "--down" and index + 1 < argLen:
-        downAction = sys.argv[index + 1]
-    if sys.argv[index] == "--up" and index + 1 < argLen:
-        upAction = sys.argv[index + 1]
-    if sys.argv[index] == "--reset" and index + 1 < argLen:
-        resetAction = sys.argv[index + 1]
-
-if startAction == "" and downAction == "" and upAction == "" and resetAction == "":
-    print("Error. Please specify robot action name. \nUsage: python %s --start xxx --down xxx --up xxx --reset xxx" % sys.argv[0])
-    exit(1)
 
 VERSION = "1.1.1"
 
@@ -71,6 +60,27 @@ press_coefficient = config['press_coefficient']
 piece_base_height_1_2 = config['piece_base_height_1_2']
 # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
 piece_body_width = config['piece_body_width']
+
+startAction = ""
+downAction = ""
+upAction = ""
+resetAction = ""
+argLen = len(sys.argv)
+if argLen > 0:
+    for index in range(1, argLen):
+        if sys.argv[index] == "--start" and index + 1 < argLen:
+            startAction = sys.argv[index + 1]
+        if sys.argv[index] == "--down" and index + 1 < argLen:
+            downAction = sys.argv[index + 1]
+        if sys.argv[index] == "--up" and index + 1 < argLen:
+            upAction = sys.argv[index + 1]
+        if sys.argv[index] == "--reset" and index + 1 < argLen:
+            resetAction = sys.argv[index + 1]
+    
+if startAction == "" and downAction == "" and upAction == "" and resetAction == "":
+    print("Error. Please specify robot action name. \nUsage: python %s --start xxx --down xxx --up xxx --reset xxx" % sys.argv[0])
+    sys.exit(1)
+
 
 
 # do robot's action
@@ -284,7 +294,6 @@ def main():
 
     action_func(resetAction, 1)
     action.sdkFinish(sys.argv[0])
-
 
 if __name__ == '__main__':
 
