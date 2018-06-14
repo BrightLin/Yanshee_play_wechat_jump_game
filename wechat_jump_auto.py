@@ -75,7 +75,7 @@ piece_body_width = config['piece_body_width']
 # do robot's action
 def action_func(Name, Repeat):
     print("run action: ", Name)
-    action.runAction(sys.argv[0], Name + '.hts', Repeat)
+    action.runAction(sys.argv[0], Name, Repeat)
 
 
 def set_button_position(im):

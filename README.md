@@ -41,6 +41,7 @@ scikit_learn==0.19.1
 
 ## Run
 ```shell
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/mnt/1xrobot/lib
 python wechat_jump_auto.py --start xxx --down xxx --up xxx --reset xxx
 ===========
 args:
@@ -66,3 +67,4 @@ def jump(distance):
 ## Robot actions
 >用Yanshee-APP创建四个动作，分别是准备姿势、按压屏幕、松开、复位
 完成后，通过APP上的分享按钮，将动作推到Yanshee存储里。
+>在Yanshee文件目录中确认有以上动作： /usr/local/recv/
